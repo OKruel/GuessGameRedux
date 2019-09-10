@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
+import GuessedWords from './GuessedWords'
+import Congrats from './Congrats'
 
-function App() {
-  return (
-    <div></div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <div className='container'>
+        <h1>Guess Word Game</h1>
+        <Congrats success={true}></Congrats>
+        <GuessedWords guessedWords={
+          [
+            { guessedWord: 'train', letterMatchCount: 3 }
+          ]
+        }>
+        </GuessedWords>
+      </div>
+    );
+
+  }
 }
 
 export default App;
