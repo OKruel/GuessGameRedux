@@ -1,5 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`renders propertly 1`] = `ShallowWrapper {}`;
-
-exports[`were created with the root div 1`] = `ShallowWrapper {}`;
