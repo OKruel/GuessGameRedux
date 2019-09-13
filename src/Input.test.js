@@ -103,4 +103,7 @@ describe('Input form calls action creator GUESSWORD', () => {
         const guessWordArg = guessWordMock.mock.calls[0][0]
         expect(guessWordArg).toBe(guessedWord)        
     });
+    test('should delete the content of the input box with the submit button', () => {
+        expect(wrapper.state('currentGuess')).toBe('')
+    });
 });

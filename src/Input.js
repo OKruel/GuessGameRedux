@@ -15,7 +15,9 @@ export class UnconnectedInput extends Component {
         //*Making sure that the word passed in the input box is a string
         if(guessedWord && guessedWord.length > 0)
         this.props.guessWord(guessedWord)
+        this.setState({currentGuess: ''})
     }
+    
     render() {
         const contents = this.props.success
             ? null
