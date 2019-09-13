@@ -1,5 +1,5 @@
 import React from 'react';
-import App from './App';
+import App, { UnconnectedApp } from './App';
 
 import { shallow } from 'enzyme'
 import { storeFactory } from '../test/testUtils'
@@ -34,4 +34,20 @@ describe('Testing Redux properties', () => {
     const getSecretWordProps = wrapper.instance().props.getSecretWord
     expect(getSecretWordProps).toBeInstanceOf(Function)
   });
+});
+
+test('getSecretWord runs on unconnected app MOUNT ', () => {
+  const getSecretWordMock = jest.fn()
+  const props = {
+    getSecretWord: getSecretWordMock,
+    success: false,
+    guessedWords: []
+  }
+  //Creating a shallow wrapper to receive getSecretWord action creator as a prop instead of receiving it from Redux state
+  const wrapper = shallow(<UnconnectedApp {...props}/>)
+  //run the lifecicle method
+  wrapper.instance().componentDidMount()
+  //Check to see if the mock ran
+  const getSecretWordCallCount = getSecretWordMock.mock.calls.length
+  expect(getSecretWordCallCount).toBe(1)
 });
