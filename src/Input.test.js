@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import { findByTestAttr, storeFactory } from '../test/testUtils'
-import Input from './Input'
+import Input, { UnconnectedInput } from './Input'
 
 const setup = (initialState = {}) => {
     const store = storeFactory(initialState)
@@ -22,23 +22,23 @@ describe('renders', () => {
         test('renders component without error', () => {
             const component = findByTestAttr(wrapper, 'component-input')
             expect(component.length).toBe(1)
-            
+
         })
         test('renders input box', () => {
             const component = findByTestAttr(wrapper, 'input-box')
             expect(component.length).toBe(1)
-            
+
         })
         test('renders submit button', () => {
             const component = findByTestAttr(wrapper, 'submit-button')
-            expect(component.length).toBe(1)            
+            expect(component.length).toBe(1)
         })
     })
 
     describe('word HAS been guessed', () => {
         let wrapper
         beforeEach(() => {
-            const initialState = {success: true}
+            const initialState = { success: true }
             wrapper = setup(initialState)
         })
         test('renders component without error', () => {
@@ -60,7 +60,7 @@ describe('renders', () => {
 describe('redux props', () => {
     test('has success piece of state as prop', () => {
         const success = true
-        const wrapper = setup({success})
+        const wrapper = setup({ success })
         const successProp = wrapper.instance().props.success
         expect(successProp).toBe(true)
     });
@@ -70,3 +70,21 @@ describe('redux props', () => {
         expect(guessWordProp).toBeInstanceOf(Function)
     });
 })
+
+describe('Input form calls action creator GUESSWORD', () => {
+    test('when button is clicked should call a GUESS WORD action creator', () => {
+        const guessWordMock = jest.fn()
+        const props = {
+            guessWord: guessWordMock,
+            success: false,
+            guessedWords: []
+        }
+        const wrapper = shallow(<UnconnectedInput {...props} />)
+
+        const button = findByTestAttr(wrapper, 'submit-button')
+        button.simulate('click')
+
+        const guessWordCallCount = guessWordMock.mock.calls.length
+        expect(guessWordCallCount).toBe(1)
+    });
+});
